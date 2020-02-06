@@ -37,3 +37,5 @@ console.log(newFact);
 
 console.log(fact.indexOf("j"))
 // --------------------------------------
+
+

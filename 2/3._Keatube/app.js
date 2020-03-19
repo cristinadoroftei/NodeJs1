@@ -15,9 +15,8 @@ app.get("/video/:videoid", (req,res) =>{
 })
 
 
-const port = process.env.PORT ? process.env.PORT : 3000;
-console.log("This is from the environment variables:", process.env.port)
-const server = app.listen(process.env.PORT, (error) => {
+const port = process.env.PORT ? process.env.PORT : 4000; //put the PORT value in a variable
+const server = app.listen(port, (error) => {
     if(error){
         console.log(error)
     }

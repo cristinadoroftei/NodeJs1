@@ -64,9 +64,9 @@ app.put("/devices", (req, res) => {
   return res.status(404).send({ response: "Device not found" });
 });
 
-app.put("/devicesRadu", (req, res) => {
+app.put("/devicesRadu/:id", (req, res) => {
   const deviceIndex = devices.findIndex(
-    device => device.id === Number(req.query.id)
+    device => device.id === Number(req.params.id)
   );
 
   let editedDevice = {

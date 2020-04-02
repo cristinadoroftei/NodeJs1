@@ -1,0 +1,8 @@
+.description{
+    font-size: 1.6em;
+}
+
+#player-wrapper{
+    width: 100vw;
+    align-items: center;
+}

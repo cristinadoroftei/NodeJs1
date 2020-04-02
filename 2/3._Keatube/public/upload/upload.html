@@ -1,0 +1,25 @@
+
+    <script src="/upload/upload.js"></script>
+    
+    <h1>Upload mfk!</h1>
+
+    <form action="/videos" method="POST" enctype="multipart/form-data" name="videoupload" onsubmit="return validateForm()">
+        <input name="title" placeholder="title" />
+        <textarea name="description" placeholder="description" rows="6"></textarea>
+        <select name="category" >
+            <option value="comedy">Comedy</option>
+            <option value="education">Education</option>
+            <option value="game">Game</option>
+            <option value="music">Music</option>
+            <option value="nature">Nature</option>
+
+
+        </select>
+        <input name="tags" placeholder="tags"/>
+        <input type="file" name="video" accept="video/*" onchange="handleFileUpload(this.files)" />
+        <label for="img" name="thumbnail">Select image:</label>
+        <button type="submit">Submit</button>
+    </form> 
+    
+
+    

@@ -1,0 +1,24 @@
+#copyright-paragraph {
+    font-size: 0.7em;
+}
+
+#logo-image{
+    width: 5em;
+    height: 3em;
+}
+
+.nav-item-image{
+    margin-top: 0em;
+}
+
+.nav-item-text{
+    margin-top: 0.7em;
+}
+
+#main-content {
+    min-height: calc(100vh - 80px);
+}
+
+footer{
+    height: 40px;
+}

@@ -1,3 +1,5 @@
+import Swal from 'sweetalert2'
+
 let fileValid = false;
 
 function validateForm() {
@@ -7,8 +9,10 @@ function validateForm() {
     const category = document.forms.videoupload.category.value
     console.log("1213", category)
     if (title < 8 || title > 64) {
-        return false;
+        return false
     }
+
+    
 
     if (description > 2048) {
         return false;
@@ -34,6 +38,16 @@ function handleFileUpload(files) {
         fileValid = false;
         return;
     }
+
+    if( fileValid == false){
+        Swal.fire({
+            title: 'Error!',
+            text: 'Do you want to continue',
+            icon: 'error',
+            confirmButtonText: 'Cool'
+          })
+    }
+
 
     fileValid = true
 

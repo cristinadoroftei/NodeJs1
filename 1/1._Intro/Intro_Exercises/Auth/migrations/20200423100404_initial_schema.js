@@ -24,6 +24,14 @@ exports.up = function(knex) {
     })
 };
 
+[roles]
+// id role
+
+[users]
+// id username ... role_id
+
+[electives]
+//id elective_name user_id
 
 exports.down = function(knex) {
   return knex.schema

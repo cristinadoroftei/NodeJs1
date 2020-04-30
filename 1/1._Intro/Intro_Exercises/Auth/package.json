@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "migrate:latest":"knex migrate:latest",
-    "migrate:make":"knex migrate:make",
+    "start-dev": "cross-env PORT=3000 nodemon app.js",
+    "migrate:latest": "knex migrate:latest",
+    "migrate:make": "knex migrate:make",
     "migrate:rollback": "knex migrate:rollback",
     "seed:make": "knex seed:make",
     "seed:run": "knex seed:run",
@@ -15,7 +16,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cross-env": "^7.0.2",
+    "express": "^4.17.1",
     "knex": "^0.21.0",
-    "mysql": "^2.18.1"
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.3",
+    "objection": "^2.1.3"
   }
 }

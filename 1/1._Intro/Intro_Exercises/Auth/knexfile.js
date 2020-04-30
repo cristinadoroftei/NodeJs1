@@ -1,6 +1,8 @@
 // Update with your config settings.
 const credentials = require("./config/mysqlCredentials.js")
 
+
+
 module.exports = {
 
   development: {

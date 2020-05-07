@@ -1,7 +1,21 @@
 const route = require("express").Router();
 const User = require("../models/User");
+const Role = require("../models/Role");
+
+const bcrypt = require('bcrypt');
+const saltRounds = 12;
+const myPlaintextPassword = 's0/\/\P4$$w0rD';
+const someOtherPlaintextPassword = 'not_bacon';
+
 
 route.post("/login", (req, res) => {
+  //1. retrieve the login details and validate
+  //2. check for a user match in database
+  //3. bcrypt compare
+  //4. sessions
+  bcrypt.compare("ffff", "fkhf", function(err, result) {
+    // result == true
+});
   return res.send({ response: "okok" });
 });
 
@@ -24,16 +38,21 @@ route.post("/signup", async (req, res) => {
         if (userFound.length > 0) {
           return res.send({ response: "Username already exists" });
         }
+
+        
         else {
+
+          const defaultUserRole = await Role.query().select().where({ role: 'USER'})
+
+          const hashedPassword = await bcrypt.hash(password, saltRounds)
+
+
             const newUser = await User.query().insert({
                 username: username,
-                password: password,
-                role_id: 2 
-              });
-            
-            //   const role = await Role.query()
-            //   .where({ role: 'USER' })
-            //   .limit(1);
+                password: hashedPassword,
+                role_id: defaultUserRole[0].id 
+              })
+          
             return res.send({ response: 'User has been created: ' + newUser.username });
         }
  
@@ -56,7 +75,11 @@ route.post("/signup", async (req, res) => {
   }
 });
 
+
+
+
 route.get("/logout", (req, res) => {
+  //todo: destroy the session
   return res.send({ response: "okok" });
 });
 

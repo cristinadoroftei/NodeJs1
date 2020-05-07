@@ -1,9 +1,28 @@
 const express = require("express");
 const app = express();
 
+
+const session = require('express-session')
+
+
+
 //body parser
 app.use(express.json());
 
+app.use(session({
+  secret: require('./config/mysqlCredentials.js').sessionSecret,
+  resave: false,
+  saveUninitialized: true,
+}))
+
+const rateLimit = require("express-rate-limit")
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 8 // limit each IP to 100 requests per windowMs
+});
+
+app.use("/login", limiter)
+app.use("/signup", limiter)
 //Setup objection  + knex
 
 //instead of using const Model = require('objection').Model
@@ -18,7 +37,9 @@ Model.knex(knex); //inside the Model there is a built-in fucntion called "knex"
 
 //Add routes
 const authRoute = require("./routes/auth.js");
+const usersRoute = require("./routes/users.js")
 app.use(authRoute);
+app.use(usersRoute)
 
 app.get("/1", (req, res) => {
   return knex("users")
@@ -32,6 +53,8 @@ app.get("/2", async(req,res) => {
   const result = await knex('users').select();
   return res.send({response: result})
 })
+
+
 
 //Start server
 const port = process.env.PORT ? process.env.PORT : 3000; //put the PORT value in a variable

@@ -7,7 +7,7 @@ const session = require('express-session')
 
 
 //body parser
-app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 app.use(session({
   secret: require('./config/mysqlCredentials.js').sessionSecret,
@@ -16,13 +16,13 @@ app.use(session({
 }))
 
 const rateLimit = require("express-rate-limit")
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 8 // limit each IP to 100 requests per windowMs
-});
+// const limiter = rateLimit({
+//   windowMs: 15 * 60 * 1000, // 15 minutes
+//   max: 8 // limit each IP to 100 requests per windowMs
+// });
 
-app.use("/login", limiter)
-app.use("/signup", limiter)
+// app.use("/login", limiter )
+// app.use("/signup", limiter)
 //Setup objection  + knex
 
 //instead of using const Model = require('objection').Model
@@ -39,7 +39,19 @@ Model.knex(knex); //inside the Model there is a built-in fucntion called "knex"
 const authRoute = require("./routes/auth.js");
 const usersRoute = require("./routes/users.js")
 app.use(authRoute);
-app.use(usersRoute)
+app.use(usersRoute);
+
+app.use(express.static('views'))
+app.use(express.static('public'))
+
+app.set("view engine", "ejs");
+app.set("views", "views");
+
+app.get("/", (req, res) => {
+  res.render("index", {
+    pageTitle: "Index"
+  })
+})
 
 app.get("/1", (req, res) => {
   return knex("users")

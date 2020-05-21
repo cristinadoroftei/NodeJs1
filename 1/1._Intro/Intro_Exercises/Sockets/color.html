@@ -17,7 +17,6 @@
         function changeBackground(){
             const color = $('#color').val()
             socket.emit("Pick a color", {color : color})
-            
         }
 
         socket.on("Someone picked", data => {

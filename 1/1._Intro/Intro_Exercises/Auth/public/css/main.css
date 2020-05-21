@@ -1,0 +1,20 @@
+#logo-image{
+    width: 6em;
+    height: 4em;
+}
+
+#index-image {
+    width: 25em;
+    height: 35em;
+    display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.input-field{
+    text-align: center;
+}
+
+.main-text{
+    font-family: 'Raleway', sans-serif;
+}

@@ -48,8 +48,12 @@ app.set("view engine", "ejs");
 app.set("views", "views");
 
 app.get("/", (req, res) => {
+  const sessionValue = req.session.value;
+  const sessionIsAdmin = req.session.isAdmin;
   res.render("index", {
-    pageTitle: "Index"
+    pageTitle: "Index",
+    userSession: sessionValue ? sessionValue : "noSession",
+    isAdmin: sessionIsAdmin ? sessionIsAdmin : false
   })
 })
 

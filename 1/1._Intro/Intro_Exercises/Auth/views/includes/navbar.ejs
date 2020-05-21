@@ -2,8 +2,16 @@
     <div class="nav-wrapper white">
     <a href="/"><img id="logo-image" src="/includes/dogLogo2.png">
       <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <% if( userSession === "noSession" )  { %>
         <li><a class="blue-grey-text text-darken-4" href="/login">Login</a></li>
         <li><a class="blue-grey-text text-darken-4" href="/signup">Signup</a></li>
+        <% } else { %>
+        <% if( isAdmin === true) { %>
+          <li><a class="blue-grey-text text-darken-4" href="/add-dog">Add dog</a></li>
+          <% } %>
+        <li><a class="blue-grey-text text-darken-4" href="/dogs">Dogs</a></li>
+        <li><a class="blue-grey-text text-darken-4" href="/logout">Logout</a></li>
+        <% } %>
       </ul>
     </div>
   </nav>

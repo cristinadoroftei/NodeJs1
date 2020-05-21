@@ -22,6 +22,13 @@ exports.up = function(knex) {
         table.timestamp('updated_at')
         table.timestamp('created_at').defaultTo(knex.fn.now())
     })
+
+    .createTable('dogs', (table) => {
+        table.increments('id')
+        table.string('breed').notNullable().unique()
+        table.string('description').notNullable()
+        table.string('imageUrl').notNullable()
+    })
 };
 
 
@@ -29,4 +36,5 @@ exports.down = function(knex) {
   return knex.schema
     .dropTableIfExists('users')
     .dropTableIfExists('roles')
+    .dropTableIfExists('dogs')
 };

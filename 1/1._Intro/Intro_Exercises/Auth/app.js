@@ -37,9 +37,11 @@ Model.knex(knex); //inside the Model there is a built-in fucntion called "knex"
 
 //Add routes
 const authRoute = require("./routes/auth.js");
-const usersRoute = require("./routes/users.js")
+const usersRoute = require("./routes/users.js");
+const adminRoute = require("./routes/admin.js")
 app.use(authRoute);
 app.use(usersRoute);
+app.use(adminRoute)
 
 app.use(express.static('views'))
 app.use(express.static('public'))
@@ -47,13 +49,27 @@ app.use(express.static('public'))
 app.set("view engine", "ejs");
 app.set("views", "views");
 
+
+
 app.get("/", (req, res) => {
   const sessionValue = req.session.value;
   const sessionIsAdmin = req.session.isAdmin;
+  console.log("Is the user an admin?" + sessionIsAdmin)
+  console.log("session value: " + sessionValue)
   res.render("index", {
     pageTitle: "Index",
     userSession: sessionValue ? sessionValue : "noSession",
     isAdmin: sessionIsAdmin ? sessionIsAdmin : false
+  })
+})
+
+app.use((req, res) => {
+  const sessionValue = req.session.value;
+  const isAdmin = req.session.isAdmin;
+  return res.render("errors/404", {
+    pageTitle: "Error",
+    userSession: sessionValue ? sessionValue : "noSession",
+    isAdmin: isAdmin ? isAdmin : false
   })
 })
 

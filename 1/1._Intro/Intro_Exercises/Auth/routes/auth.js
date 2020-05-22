@@ -4,12 +4,10 @@ const Role = require("../models/Role");
 
 const bcrypt = require("bcrypt");
 const saltRounds = 12;
-const myPlaintextPassword = "s0//P4$$w0rD";
-const someOtherPlaintextPassword = "not_bacon";
 
 route.get("/login", (req, res) => {
   const error = req.query.error;
-  res.render("login", {
+  res.render("auth/login", {
     pageTitle: "Login",
     error: error ? error : "noError",
     userSession: "noSession",
@@ -49,8 +47,10 @@ route.post("/login", async (req, res) => {
                   } else {
                     req.session.isAdmin = false;
                   }
-                });
-              return res.redirect("/");
+                }).then(() => {
+                  return res.redirect("/");
+                })
+
             } else {
               return res.redirect(
                 "/login?error=Invalid username and/or password"
@@ -70,7 +70,7 @@ route.post("/login", async (req, res) => {
 });
 
 route.get("/signup", (req, res) => {
-  res.render("signup", {
+  res.render("auth/signup", {
     pageTitle: "Signup",
     error: "noError",
     userSession: "noSession",
@@ -83,12 +83,14 @@ route.post("/signup", async (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
   const passwordRepeat = req.body.passwordRepeat;
+  const email = req.body.email;
 
   const isPasswordTheSame = password === passwordRepeat;
 
-  if (username && password && isPasswordTheSame) {
+  if (username && password && isPasswordTheSame && email) {
     if (password.length < 8) {
-      return res.status(400).render("signup", {
+      return res.status(400).render("auth/signup", {
+        userSession: "noSession",
         error: "Password does not fulfill the requirements",
         pageTitle: "Signup",
       });
@@ -98,7 +100,8 @@ route.post("/signup", async (req, res) => {
           .where({ username: username })
           .limit(1);
         if (userFound.length > 0) {
-          return res.render("signup", {
+          return res.render("auth/signup", {
+            userSession: "noSession",
             error: "Username already exists",
             pageTitle: "Signup",
           });
@@ -111,28 +114,38 @@ route.post("/signup", async (req, res) => {
 
           const newUser = await User.query().insert({
             username: username,
+            email: email,
             password: hashedPassword,
             role_id: defaultUserRole[0].id,
           });
 
           req.session.value = username;
-          res.session.isAdmin = false;
+          req.session.isAdmin = false;
           return res.redirect("/");
         }
       } catch (error) {
-        return res
-          .status(500)
-          .send({ response: "Something went wrong with the database" });
+        console.log(error)
+        return res.render("auth/signup", {
+          userSession: "noSession",
+          error: "Something went wrong with the database",
+          pageTitle: "Signup",
+        });
       }
     }
   } else if (password && passwordRepeat && !isPasswordTheSame) {
-    return res.status(404).send({
-      response: "Password not matching. Fileds: password and passwordRepeat",
+    return res.render("auth/signup", {
+      userSession: "noSession",
+      error: "Password not matching. Fileds: password and passwordRepeat",
+      pageTitle: "Signup",
     });
+
   } else {
-    return res
-      .status(404)
-      .send({ response: "Missing fields: username, password, passwordRepeat" });
+
+    return res.render("auth/signup", {
+      userSession: "noSession",
+      error: "Missing fields: username, email, password, passwordRepeat",
+      pageTitle: "Signup",
+    });
   }
 });
 

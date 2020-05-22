@@ -8,28 +8,28 @@ router.get("/users/roles", async(req,res) => {
     return res.send({response: result})
   })
 
-router.get('/setsessionvalue/:value', (req, res) => {
-  const value = req.params.value
-  req.session.myValue = value
-  return res.send({response: {}})
-})
+// router.get('/setsessionvalue/:value', (req, res) => {
+//   const value = req.params.value
+//   req.session.myValue = value
+//   return res.send({response: {}})
+// })
 
-router.get('/getsessionvalue', (req, res) => {
-  return res.send({response: req.session.myValue})
-})
+// router.get('/getsessionvalue', (req, res) => {
+//   return res.send({response: req.session.myValue})
+// })
 
 router.get("/dogs", async (req, res) => {
-  const session = req.session.value;
+  const sessionValue = req.session.value;
   const sessionIsAdmin = req.session.isAdmin;
-  if (!session) {
+  if (!sessionValue) {
     return res.redirect("/login")
   } else {
     const dogs = await Dog.query();
     console.log(dogs);
-    return res.render("dogs", {
+    return res.render("user/dogs", {
       pageTitle: "Dogs",
       dogs: dogs,
-      userSession: session,
+      userSession: sessionValue,
       isAdmin : sessionIsAdmin? sessionIsAdmin : false
     })
   }

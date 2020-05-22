@@ -1,0 +1,56 @@
+<%- include("../includes/head.ejs") %>
+
+</head>
+
+
+
+
+<body>
+
+    <%- include("../includes/navbar.ejs") %>
+
+    <main>
+        <div class="container">
+            <% if( error !== "noError" ) { %>
+                <h5 class="form-error-text"> <%= error %> </h5>
+            <% } %>
+            <h4 class="form-title-text">Add Dog</h4>
+            <div class="row">
+                <form action="/addDog" method="POST" class="col s6 offset-m4">
+                  <div class="row">
+                    <div class="input-field col s6">
+                      <input name="breed" id="breed" type="text" class="validate">
+                      <label for="breed">Breed</label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="input-field col s12">
+                      <textarea name="description" id="description" class="materialize-textarea" data-length="200"></textarea>
+                      <label for="description">Description</label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="input-field col s6">
+                      <input name="imageUrl" id="imageUrl" type="text" class="validate">
+                      <label for="imageUrl">Image URL</label>
+                    </div>
+                  </div>
+                  <button class="btn waves-effect waves-light" type="submit" name="action">Add good boy
+                    <i class="material-icons right"></i>
+                  </button>
+                </form>
+              </div>
+
+        </div>
+        
+    </main>
+
+
+
+</body>
+<script>
+  $(document).ready(function() {
+   $('textarea#description').characterCounter();
+ });
+</script>
+</html>

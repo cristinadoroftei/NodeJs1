@@ -9,11 +9,11 @@
         <%- include("./includes/navbar.ejs") %>
         <div class="container">
             <% if( userSession === "noSession" )  { %>
-            <h3>Welcome! If you want to see the list of our favourite dogs, please login or register</h3>
+            <h3>Welcome! If you want to see the list of our favourite dogs, please log in or sign up.</h3>
             <% } else { %>
             <h3>Welcome back, <%= userSession %>!</h3>
             <% } %>
-            <img src="cutedog.jpg" id="index-image">
+            <img src="/pictures/cutedog.jpg" id="index-image">
         </div>
     </div>
 

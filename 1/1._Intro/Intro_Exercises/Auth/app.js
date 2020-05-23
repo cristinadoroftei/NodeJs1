@@ -74,18 +74,18 @@ app.use((req, res) => {
   })
 })
 
-app.get("/1", (req, res) => {
-  return knex("users")
-    .select()
-    .then((users) => {
-      return res.send({ response: users });
-    });
-});
+// app.get("/1", (req, res) => {
+//   return knex("users")
+//     .select()
+//     .then((users) => {
+//       return res.send({ response: users });
+//     });
+// });
 
-app.get("/2", async(req,res) => {
-  const result = await knex('users').select();
-  return res.send({response: result})
-})
+// app.get("/2", async(req,res) => {
+//   const result = await knex('users').select();
+//   return res.send({response: result})
+// })
 
 
 

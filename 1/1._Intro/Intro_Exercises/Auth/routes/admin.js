@@ -90,8 +90,6 @@ router.post("/sendEmail", async (req, res) => {
     const content = req.body.content;
 
     if(subject && content) {
-          // Generate test SMTP service account from ethereal.email
-  // Only needed if you don't have a real mail account for testing
   let testAccount = await User.query()
   .where({
     email: "favoritedogs1234@gmail.com",
@@ -100,8 +98,8 @@ router.post("/sendEmail", async (req, res) => {
   let transporter = await nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: testAccount[0].email, // generated ethereal user
-      pass: testAccount[0].emailPassword, // generated ethereal password
+      user: testAccount[0].email, 
+      pass: testAccount[0].emailPassword, 
     },
   });
 
@@ -116,7 +114,7 @@ router.post("/sendEmail", async (req, res) => {
   // send mail with defined transport object
   let info = transporter.sendMail({
     from: testAccount[0].email, // sender address
-    to: user.email, // list of receivers
+    to: user.email, // receiver
     subject: subject, // Subject line
     html: `<b>${content}</b>`, // html body
   });

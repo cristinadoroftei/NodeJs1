@@ -63,6 +63,7 @@ app.get("/", (req, res) => {
   })
 })
 
+//page not found
 app.use((req, res) => {
   const sessionValue = req.session.value;
   const isAdmin = req.session.isAdmin;
